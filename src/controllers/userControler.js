@@ -7,7 +7,7 @@ const createUser = async (req, res) => {
 
   return res.status(201).json({ token: message });
 };
-const getUsers = async (req, res) => {
+const getUsers = async (_req, res) => {
   const message = await userService.getUsers();
 
   return res.status(200).json(message);

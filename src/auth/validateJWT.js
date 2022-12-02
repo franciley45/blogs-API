@@ -5,13 +5,15 @@ const secret = process.env.JWT_SECRET;
 const validateToken = (req, res, next) => {
   const token = req.headers.authorization;
   if (!token) {
-    return res.status(401).json({ message: 'Token not found' });
+    const err = { statusCode: 401, message: 'Token not found' };
+    return next(err);
   }
   try {
     jwt.verify(token, secret);
     next();
-  } catch (error) {
-    return res.status(401).json({ message: 'Expired or invalid token' });
+  } catch (e) {
+    const error = { statusCode: 401, message: 'Expired or invalid token' };
+    next(error);
   }
 };
 

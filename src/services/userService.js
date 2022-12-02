@@ -14,14 +14,11 @@ const createUser = async (req) => {
   return { status: null, message: token };
 };
 
-const getByUserId = (userId) => models.User.findByPk(userId);
-
 const getUsers = async () => models.User.findAll({ 
       attributes: { exclude: 'password' },
     });
 
 module.exports = {
   createUser,
-  getByUserId,
   getUsers,
 };
