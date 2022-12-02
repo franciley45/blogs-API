@@ -7,7 +7,9 @@ const createCategory = async (name) => {
   
        return { status: null, message: result };
   };
+  const getCategory = async () => models.Category.findAll(); 
 
   module.exports = {
    createCategory,
+   getCategory,
   };
