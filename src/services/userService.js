@@ -18,7 +18,19 @@ const getUsers = async () => models.User.findAll({
       attributes: { exclude: 'password' },
     });
 
+    const getUserById = async (userId) => {
+      const [result] = await models.User.findAll({ 
+        where: { id: userId },
+        attributes: { exclude: 'password' },
+      });
+
+      if (result === undefined) return { status: 404, message: 'User does not exist' };
+
+      return { status: null, message: result };
+    }; 
+
 module.exports = {
   createUser,
   getUsers,
+  getUserById,
 };
