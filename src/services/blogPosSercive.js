@@ -25,7 +25,6 @@ const getByIdPosts = async (id) => {
   });
 
   if (posts === undefined) return { status: 404, message: 'Post does not exist' };
-  
   return {
     status: 200, message: posts,
   };
