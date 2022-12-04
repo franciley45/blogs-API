@@ -1,3 +1,4 @@
+const { currentId } = require('../auth/currentId');
 const models = require('../models');
 
 const getAllPosts = async () => {
@@ -5,7 +6,7 @@ const getAllPosts = async () => {
     include: [{ model: models.User, as: 'user', attributes: { exclude: ['password'] } },
     { model: models.Category, as: 'categories' }],
   });
-  console.log('aquiiii', posts);
+
   return {
     status: 200, posts,
   };
@@ -30,7 +31,24 @@ const getByIdPosts = async (id) => {
   };
 };
 
+const updatePost = async (req, id) => {
+  const userID = currentId(req);
+  const { message } = await getByIdPosts(id);
+
+  if (userID !== message.userId) return { status: 401, message: 'Unauthorized user' };
+  if (!req.body.title || !req.body.content) {
+    return { status: 400, message: 'Some required fields are missing' };
+  }
+  await models.BlogPost.update(req.body,
+    { where: { id, userId: userID } });
+
+  const result = await getByIdPosts(id);
+
+  return { status: 200, message: result.message };
+};
+
 module.exports = {
   getAllPosts,
   getByIdPosts,
+  updatePost,
 };

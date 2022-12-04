@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllPosts, getByIdPosts } = require('../controllers/blogPostController');
+const { getAllPosts, getByIdPosts, updatePost } = require('../controllers/blogPostController');
 const { validateToken } = require('../auth/validateJWT');
 
 const postRouter = express.Router();
@@ -7,5 +7,7 @@ const postRouter = express.Router();
 postRouter.get('/', validateToken, getAllPosts);
 
 postRouter.get('/:id', validateToken, getByIdPosts);
+
+postRouter.put('/:id', validateToken, updatePost);
 
 module.exports = postRouter;
