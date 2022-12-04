@@ -1,8 +1,8 @@
-'use strict';
+const { DATE } = require("sequelize");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('blog_posts', {
+    return queryInterface.createTable('blog_posts', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -17,30 +17,29 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      user_id: {
+      userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         field: 'user_id',
-        foreignKey: true,
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
         references: {
           model: 'users',
           key: 'id',
-        }
+        },
       },
       published: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updated: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
-
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('blog_posts');
-
+    return queryInterface.dropTable('blog_posts');
   }
 };
