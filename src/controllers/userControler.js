@@ -21,9 +21,13 @@ if (status) return res.status(status).json({ message });
 
 return res.status(200).json(message);
 };
-
+const deleteUser = async (req, res) => {
+await userService.deleteUser(req);
+return res.status(204).json();
+};
 module.exports = {
   createUser,
   getUsers,
   getUserById,
+  deleteUser,
 };

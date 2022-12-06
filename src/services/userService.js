@@ -29,8 +29,14 @@ const getUsers = async () => models.User.findAll({
       return { status: null, message: result };
     }; 
 
+    const deleteUser = async (req) => {
+      const { data } = req.user;
+      await models.User.destroy({ where: { id: data.id } });
+    };
+
 module.exports = {
   createUser,
   getUsers,
   getUserById,
+  deleteUser,
 };
