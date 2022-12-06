@@ -9,7 +9,8 @@ const validateToken = (req, res, next) => {
     return next(err);
   }
   try {
-    jwt.verify(token, secret);
+    const result = jwt.verify(token, secret);
+    req.user = result;
     next();
   } catch (e) {
     const error = { statusCode: 401, message: 'Expired or invalid token' };
