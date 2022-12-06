@@ -28,12 +28,22 @@ const deletePost = async (req, res) => {
  
   const { status, message } = await postService.deletePost(data.id, id);
   if (status === 404 || status === 401) return res.status(status).json({ message });
+
    res.status(status).json();
 };
 const createPost = async (req, res) => {
 const { status, message } = await postService.createPost(req);
 if (status === 400) return res.status(status).json({ message });
+
 res.status(status).json(message);
+};
+
+const getPostsByLIKE = async (req, res) => {
+  const { q } = req.query;
+  const { status, message } = await postService.getPostsByLIKE(q);
+  if (status === 404) return res.status(status).json({ message });
+
+  res.status(status).json(message);
 };
 
 module.exports = {
@@ -42,4 +52,5 @@ module.exports = {
   updatePost,
   deletePost,
   createPost,
+  getPostsByLIKE,
 };
