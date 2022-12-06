@@ -1,4 +1,3 @@
-const { currentId } = require('../auth/currentId');
 const models = require('../models');
 
 const getAllPosts = async () => {
@@ -32,18 +31,18 @@ const getByIdPosts = async (id) => {
 };
 
 const updatePost = async (req, id) => {
-  const userID = currentId(req);
+  const { data } = req.user;
   const { message } = await getByIdPosts(id);
 
-  if (userID !== message.userId) return { status: 401, message: 'Unauthorized user' };
+  if (data.id !== message.userId) return { status: 401, message: 'Unauthorized user' };
   if (!req.body.title || !req.body.content) {
     return { status: 400, message: 'Some required fields are missing' };
   }
   await models.BlogPost.update(req.body,
-    { where: { id, userId: userID } });
+    { where: { id, userId: data.id } });
 
   const result = await getByIdPosts(id);
-  console.log(result.message.id);
+
   return { status: 200, message: result.message };
 };
 

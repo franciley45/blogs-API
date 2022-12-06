@@ -21,13 +21,6 @@ const updatePost = async (req, res) => {
 
   res.status(status).json(message);
 };
-/* const deletePost = async (req, res) => {
-  const { id } = req.params;
-  const { status, message } = await postService.deletePost(req, id);
-console.log(status);
-  if (status === 404 || status === 401) return res.status(status).json({ message });
-  if (status === 200) return res.status(204).json();
-}; */
 
 const deletePost = async (req, res) => {
   const { id } = req.params;
